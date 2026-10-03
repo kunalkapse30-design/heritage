@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Explorer | Unveiling Ancient Marvels</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        heritage: {
+                            50: '#FAF8F5',
+                            100: '#F3EFEA',
+                            200: '#E4DDD3',
+                            300: '#D2C4B2',
+                            400: '#BBA48C',
+                            500: '#A48668',
+                            600: '#8A6A4E',
+                            700: '#6F513A',
+                            800: '#523B2A',
+                            900: '#2A1D13',
+                            950: '#140D08',
+                        },
+                        gold: {
+                            300: '#FCE081',
+                            400: '#F5CD52',
+                            500: '#E0B12B',
+                            600: '#B88B1B',
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #140D08;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #523B2A;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8A6A4E;
+        }
+        .bg-pattern {
+            background-image: radial-gradient(rgba(224, 177, 43, 0.08) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(224, 177, 43, 0.35);
+        }
+        .gold-border-gradient {
+            border-image: linear-gradient(to bottom, #E0B12B, #523B2A) 1;
+        }
+    </style>
+</head>
+<body class="bg-heritage-950 text-heritage-100 font-sans antialiased bg-pattern selection:bg-gold-500 selection:text-heritage-950">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-heritage-950/80 backdrop-blur-md border-b border-heritage-800/50" id="main-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-full border border-gold-500/50 flex items-center justify-center bg-heritage-900 group-hover:border-gold-400 transition-colors">
+                        <i class="fa-solid font-cinzel text-gold-500 text-lg">🏛️</i>
+                    </div>
+                    <div>
+                        <span class="font-cinzel text-xl font-bold tracking-widest text-heritage-50 block uppercase">Heritage</span>
+                        <span class="text-[10px] tracking-[0.3em] text-gold-500 font-semibold block uppercase -mt-1">Explorer</span>
+                    </div>
+                </a>
+
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wider">
+                    <a href="#hero" class="text-heritage-200 hover:text-gold-400 transition-colors uppercase text-xs tracking-widest">Home</a>
+                    <a href="#discover" class="text-heritage-200 hover:text-gold-400 transition-colors uppercase text-xs tracking-widest">Wonders</a>
+                    <a href="#timeline-section" class="text-heritage-200 hover:text-gold-400 transition-colors uppercase text-xs tracking-widest">Chronology</a>
+                    <a href="#saved" class="text-heritage-200 hover:text-gold-400 transition-colors uppercase text-xs tracking-widest relative" onclick="openFavoritesModal()">
+                        Saved Wonders
+                        <span id="saved-count" class="ml-1 px-1.5 py-0.5 text-[10px] bg-gold-500 text-heritage-950 rounded-full font-bold">0</span>
+                    </a>
+                </div>
+
+                <div class="hidden sm:block">
+                    <button onclick="scrollToExplore()" class="px-5 py-2.5 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-heritage-950 font-bold text-xs tracking-widest uppercase rounded-sm transition-all duration-300 shadow-lg shadow-gold-500/10 hover:shadow-gold-500/20">
+                        Explore World
+                    </button>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-heritage-200 hover:text-gold-400 text-xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-heritage-900/95 border-b border-heritage-800 px-4 pt-2 pb-6 space-y-4">
+            <a href="#hero" class="block text-heritage-200 hover:text-gold-400 py-2 uppercase text-xs tracking-widest">Home</a>
+            <a href="#discover" class="block text-heritage-200 hover:text-gold-400 py-2 uppercase text-xs tracking-widest">Wonders</a>
+            <a href="#timeline-section" class="block text-heritage-200 hover:text-gold-400 py-2 uppercase text-xs tracking-widest">Chronology</a>
+            <button onclick="openFavoritesModal()" class="w-full text-left text-heritage-200 hover:text-gold-400 py-2 uppercase text-xs tracking-widest flex items-center justify-between">
+                <span>Saved Wonders</span>
+                <span id="mobile-saved-count" class="px-2 py-0.5 text-[10px] bg-gold-500 text-heritage-950 rounded-full font-bold">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&q=80&w=2000" 
+                 alt="Taj Mahal Hero Background" 
+                 class="w-full h-full object-cover opacity-35 scale-105 transform transition-transform duration-1000 ease-out" 
+                 id="hero-bg-img">
+            <div class="absolute inset-0 bg-gradient-to-t from-heritage-950 via-heritage-950/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-heritage-950/80 via-transparent to-heritage-950/80"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-8 py-20">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-widest uppercase">
+                <i class="fa-solid fa-compass text-sm"></i>
+                <span>Virtual Journey Through Human Legacy</span>
+            </div>
+
+            <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-extrabold text-heritage-50 tracking-tight leading-tight">
+                Chronicles of <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-heritage-400 text-glow">Ancient Civilizations</span>
+            </h1>
+
+            <p class="font-playfair text-lg sm:text-xl text-heritage-300 max-w-2xl mx-auto italic font-normal leading-relaxed">
+                Step across centuries to explore breathtaking architectural marvels, unravel forgotten mythologies, and relive human history.
+            </p>
+
+            <div class="max-w-2xl mx-auto pt-4">
+                <div class="relative flex items-center rounded-lg bg-heritage-900/90 border border-gold-500/40 p-2 shadow-2xl backdrop-blur-md focus-within:border-gold-400 transition-all">
+                    <i class="fa-solid fa-magnifying-glass text-gold-500 pl-4 pr-3 text-lg"></i>
+                    <input type="text" id="main-search-input" placeholder="Search by site name, country, or era..." 
+                           class="w-full bg-transparent text-heritage-100 placeholder-heritage-400 text-sm focus:outline-none py-2">
+                    <button onclick="executeSearch()" class="px-6 py-2.5 bg-gold-500 hover:bg-gold-400 text-heritage-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors flex items-center space-x-2">
+                        <span>Search</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto pt-10 border-t border-heritage-800/60">
+                <div>
+                    <div class="font-cinzel text-2xl font-bold text-gold-400">7 Wonders</div>
+                    <div class="text-xs text-heritage-400 tracking-wider uppercase mt-1">Curated Wonders</div>
+                </div>
+                <div>
+                    <div class="font-cinzel text-2xl font-bold text-gold-400">4,500+</div>
+                    <div class="text-xs text-heritage-400 tracking-wider uppercase mt-1">Years of History</div>
+                </div>
+                <div>
+                    <div class="font-cinzel text-2xl font-bold text-gold-400">3D Audio</div>
+                    <div class="text-xs text-heritage-400 tracking-wider uppercase mt-1">Guided Narration</div>
+                </div>
+                <div>
+                    <div class="font-cinzel text-2xl font-bold text-gold-400">interactive</div>
+                    <div class="text-xs text-heritage-400 tracking-wider uppercase mt-1">Historical Timelines</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 text-center animate-bounce">
+            <a href="#discover" class="text-gold-500/70 hover:text-gold-400 text-sm flex flex-col items-center gap-1">
+                <span class="text-[10px] tracking-widest uppercase">Scroll To Explore</span>
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Discover / Sites Grid Section -->
+    <section id="discover" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center space-y-3 mb-12">
+            <h2 class="font-cinzel text-xs tracking-[0.4em] text-gold-500 uppercase font-semibold">Treasures Of Humanity</h2>
+            <p class="font-cinzel text-3xl sm:text-4xl font-bold text-heritage-50">Explore Historical Wonders</p>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-2"></div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-10 pb-6 border-b border-heritage-800">
+            <div class="flex flex-wrap items-center gap-2" id="filter-pills">
+                <button onclick="filterCategory('all')" class="filter-btn active px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-md border border-gold-500/40 bg-gold-500 text-heritage-950 transition-all">All Wonders</button>
+                <button onclick="filterCategory('Asia')" class="filter-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-md border border-heritage-800 bg-heritage-900 text-heritage-300 hover:border-gold-500/40 transition-all">Asia</button>
+                <button onclick="filterCategory('Europe')" class="filter-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-md border border-heritage-800 bg-heritage-900 text-heritage-300 hover:border-gold-500/40 transition-all">Europe</button>
+                <button onclick="filterCategory('Americas')" class="filter-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-md border border-heritage-800 bg-heritage-900 text-heritage-300 hover:border-gold-500/40 transition-all">Americas</button>
+                <button onclick="filterCategory('Africa')" class="filter-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-md border border-heritage-800 bg-heritage-900 text-heritage-300 hover:border-gold-500/40 transition-all">Africa</button>
+                <button onclick="filterCategory('Middle East')" class="filter-btn px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-md border border-heritage-800 bg-heritage-900 text-heritage-300 hover:border-gold-500/40 transition-all">Middle East</button>
+            </div>
+
+            <div class="flex items-center space-x-2 text-xs text-heritage-400">
+                <span>Sort By:</span>
+                <select id="sort-select" onchange="applySorting()" class="bg-heritage-900 border border-heritage-800 text-heritage-200 text-xs rounded-md px-3 py-2 focus:outline-none focus:border-gold-500">
+                    <option value="popular">Most Popular</option>
+                    <option value="oldest">Oldest Heritage</option>
+                    <option value="name">Alphabetical</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="monuments-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        </div>
+    </section>
+
+    <!-- Monument Detail Modal -->
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-heritage-950/90 backdrop-blur-xl transition-opacity duration-300">
+        <div class="min-h-screen px-4 text-center flex items-center justify-center py-12">
+            <div class="relative inline-block w-full max-w-5xl text-left bg-heritage-900 border border-heritage-700/60 rounded-xl overflow-hidden shadow-2xl transform transition-all">
+                <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-heritage-950/70 border border-heritage-700 text-heritage-200 hover:text-gold-400 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div id="modal-content-container">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <section id="timeline-section" class="py-20 bg-heritage-900/40 border-y border-heritage-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="font-cinzel text-xs tracking-[0.4em] text-gold-500 uppercase font-semibold">Chronology Of Eras</h2>
+                <p class="font-cinzel text-3xl sm:text-4xl font-bold text-heritage-50">Timeline Of World Civilizations</p>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-2"></div>
+            </div>
+
+            <div class="relative wrap overflow-hidden p-2 sm:p-10">
+                <div class="border-2-2 absolute border-opacity-20 border-gold-500 h-full border left-1/2 -ml-0.5 hidden md:block"></div>
+                <div id="timeline-events-container" class="space-y-12">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Saved / Bookmarks Drawer Modal -->
+    <div id="favorites-modal" class="fixed inset-0 z-50 hidden overflow-hidden bg-heritage-950/80 backdrop-blur-md">
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-heritage-900 border-l border-heritage-800 p-6 flex flex-col justify-between shadow-2xl">
+                <div>
+                    <div class="flex items-center justify-between pb-6 border-b border-heritage-800">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-bookmark text-gold-500 text-xl"></i>
+                            <h2 class="font-cinzel text-xl font-bold text-heritage-50">Saved Wonders</h2>
+                        </div>
+                        <button onclick="closeFavoritesModal()" class="text-heritage-400 hover:text-gold-400 text-lg">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <div id="favorites-list" class="mt-6 space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-heritage-800">
+                    <button onclick="closeFavoritesModal()" class="w-full py-3 bg-heritage-800 hover:bg-heritage-700 text-heritage-200 font-bold text-xs uppercase tracking-wider rounded-md transition-colors">
+                        Close Panel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div
+
+    <!-- Footer -->
+    <footer class="bg-heritage-950 border-t border-heritage-800 text-heritage-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full border border-gold-500/50 flex items-center justify-center bg-heritage-900">
+                            <i class="fa-solid font-cinzel text-gold-500 text-xs">🏛️</i>
+                        </div>
+                        <span class="font-cinzel text-lg font-bold text-heritage-100 tracking-wider">HERITAGE EXPLORER</span>
+                    </div>
+                    <p class="text-xs text-heritage-400 leading-relaxed font-playfair italic">
+                        Dedicated to preserving and showcasing the architectural grandeur, tales, and history of humanity's legacy.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-cinzel text-sm font-bold text-heritage-200 tracking-wider uppercase mb-4">Quick Navigation</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#hero" class="hover:text-gold-400 transition-colors">Home Banner</a></li>
+                        <li><a href="#discover" class="hover:text-gold-400 transition-colors">Explore Monuments</a></li>
+                        <li><a href="#timeline-section" class="hover:text-gold-400 transition-colors">Global Chronology</a></li>
+                        <li><a href="#" onclick="openFavoritesModal(); return false;" class="hover:text-gold-400 transition-colors">Bookmarks</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-cinzel text-sm font-bold text-heritage-200 tracking-wider uppercase mb-4">Featured Locations</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" onclick="openDetailView(1); return false;" class="hover:text-gold-400 transition-colors">Taj Mahal (India)</a></li>
+                        <li><a href="#" onclick="openDetailView(2); return false;" class="hover:text-gold-400 transition-colors">Colosseum (Italy)</a></li>
+                        <li><a href="#" onclick="openDetailView(3); return false;" class="hover:text-gold-400 transition-colors">Machu Picchu (Peru)</a></li>
+                        <li><a href="#" onclick="openDetailView(4); return false;" class="hover:text-gold-400 transition-colors">Petra (Jordan)</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-cinzel text-sm font-bold text-heritage-200 tracking-wider uppercase mb-4">Audio & Virtual</h4>
+                    <p class="text-xs text-heritage-400 leading-relaxed mb-4">
+                        Experience virtual guided ambient audio tours for selected historical monuments.
+                    </p>
+                    <div class="inline-flex items-center space-x-2 text-xs text-gold-400 font-semibold border border-gold-500/30 px-3 py-1.5 rounded bg-gold-500/5">
+                        <i class="fa-solid fa-headphones"></i>
+                        <span>Stereo Guides Enabled</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-heritage-900 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-heritage-500">
+                <p>&copy; 2026 Heritage Explorer. Designed for discovery and historical appreciation.</p>
+                <div class="flex space-x-4 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-gold-400"><i class="fa-brands fa-twitter text-sm"></i></a>
+                    <a href="#" class="hover:text-gold-400"><i class="fa-brands fa-instagram text-sm"></i></a>
+                    <a href="#" class="hover:text-gold-400"><i class="fa-brands fa-github text-sm"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const heritageData = [
+            {
+                id: 1,
+                name: "Taj Mahal",
+                location: "Agra, Uttar Pradesh",
+                country: "India",
+                region: "Asia",
+                year: "1632 - 1653 AD",
+                eraNum: 1632,
+                image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&q=80&w=1000",
+                gallery: [
+                    "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&q=80&w=1000",
+                    "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&q=80&w=1000",
+                    "https://images.unsplash.com/photo-1585135497273-1a86b09fe707?auto=format&fit=crop&q=80&w=1000"
+                ],
+                shortStory: "An immense mausoleum of white marble, built in Agra between 1632 and 1653 by order of the Mughal emperor Shah Jahan in memory of his favourite wife.",
+                fullStory: "The Taj Mahal is considered to be the greatest architectural achievement in the whole range of Indo-Islamic architecture. Its recognised architectonic beauty has a rhythmic combination of solids and voids, concave and convex and light shadow; such as arches and domes further increases the aesthetic aspect. The color combination of lush green path red pathway and blue sky over it show cases the color variation of the monument.",
+                latitude: "27.1751° N",
+                longitude: "78.0421° E",
+                audioTitle: "Tales of Eternal Devotion & Mughal Architecture",
+                audioUrl: "https://actions.google.com/sounds/v1/ambiences/outdoor_park.ogg",
+                timeline: [
+                    { year: "1631", text: "Empress Mumtaz Mahal passes away; Emperor Shah Jahan vows to construct her tribute." },
+                    { year: "1632", text: "Construction officially commences with over 20,000 artisans and craftsmen." },
+                    { year: "1648", text: "Main white marble mausoleum completed." },
+                    { year: "1983", text: "Designated as a UNESCO World Heritage Site." }
+                ]
+            },
+            {
+                id: 2,
+                name: "Colosseum",
+                location: "Rome",
+                country: "Italy",
+                region: "Europe",
+                year: "70 - 80 AD",
+                eraNum: 70,
+                image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=80&w=1000",
+                gallery: [
+                    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=80&w=1000",
+                    "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&q=80&w=1000",
+                    "https://images.unsplash.com/photo-1581430872221-d13a078028f8?auto=format&fit=crop&q=80&w=1000"
+                ],
+                shortStory: "An ancient amphitheatre in the centre of Rome, built of travertine limestone, tuff, and brick-faced concrete.",
+                fullStory: "The Colosseum could hold an estimated 50,000 to 80,000 spectators at various points of its history, having an average audience of some 65,000; it was used for gladiatorial contests and public spectacles such as mock sea battles, animal hunts, executions, re-enactments of famous battles, and dramas based on Classical mythology.",
+                latitude: "41.8902° N",
+                longitude: "12.4922° E",
+                audioTitle: "Roar of the Flavian Amphitheatre",
+                audioUrl: "https://actions.google.com/sounds/v1/ambiences/crowd_outside.ogg",
+                timeline: [
+                    { year: "70 AD", text: "Commissioned by Emperor Vespasian of the Flavian dynasty." },
+                    { year: "80 AD", text: "Inaugurated by Emperor Titus with 100 days of gladiatorial games." },
+                    { year: "217 AD", text: "Damaged severely by a major fire caused by lightning." },
+                    { year: "1349", text: "A severe earthquake causes catastrophic collapse of the outer south side." }
+                ]
+            },
+            {
+                id: 3,
+                name: "Machu Picchu",
+                location: "Cusco Region",
+                country: "Peru",
+                region: "Americas",
+                year: "c. 1450 AD",
+                eraNum: 1450,
+                image: "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&q=80&w=1000",
+                gallery: [
+                    "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&q=80&w=1000",
+                    "https://images.unsplash.com/photo-1589802829985-817e51171b92?auto=format&fit=crop&q=80&w=1000"
+                ],
+                shortStory: "A 15th-century Inca citadel located in the Eastern Cordillera of southern Peru on a 2,430-metre mountain ridge.",
+                fullStory: "Machu Picchu was built in the classical Inca style, with polished dry-stone walls. Its three primary structures are the Intihuatana, the Temple of the Sun, and the Room of the Three Windows. Most recent archaeology indicates that Machu Picchu was built as an estate for the Inca emperor Pachacuti (1438–1471).",
+                latitude: "13.1631° S",
+                longitude: "72.5450° W",
+                audioTitle: "Echoes of the Incan Andes",
+                audioUrl: "https://actions.google.com/sounds/v1/ambiences/wind_mountain.ogg",
+                timeline: [
+                    { year: "1450", text: "Construction begins under the Incan ruler Pachacuti." },
+                    { year: "1572", text: "Site abandoned around the time of the Spanish Conquest." },
+                    { year: "1911", text: "Brought to international attention by historian Hiram Bingham." },
+                    { year: "1983", text: "Named a UNESCO World Heritage Site." }
+                ]
+            },
+            {
+                id: 4,
+                name: "Petra",
+                location: "Ma'an",
+                country: "Jordan",
+                region: "Middle East",
+                year: "312 BC",
+                eraNum: -312,
+                image: "https://images.unsplash.com/photo-1579606030826-5d991e777f5a?auto=format&fit=crop&q=80&w=1000",
+                gallery: [
+                    "https://images.unsplash.com/photo-1579606030826-5d991e777f5a?auto=format&fit=crop&q=80&w=1000",
+                    "https://images.unsplash.com/photo-1501238295340-c810d3c156d2?auto=format&fit=crop&q=80&w=1000"
+                ],
+                shortStory: "Famous for its rock-cut architecture and water conduit system, Petra is also called the 'Rose City'.",
+                fullStory: "Petra was established possibly as early as 312 BC as the capital city of the Arab Nabataeans. The Nabataeans were nomadic Arabs who took advantage of Petra's proximity to the regional trade routes to establish it as a major trading hub. Petra is also famous for its capacity to harness water through engineered conduits.",
+                latitude: "30.3289° N",
+                longitude: "35.4444° E",
+                audioTitle: "Secrets of the Rose Canyon",
+                audioUrl: "https://actions.google.com/sounds/v1/ambiences/desert_wind.ogg",
+                timeline: [
+                    { year: "312 BC", text: "Nabataean Arabs establish Petra as their capital." },
+                    { year: "106 AD", text: "Falls to the Roman Empire under Emperor Trajan." },
+                    { year: "363 AD", text: "A massive earthquake destroys heavy infrastructure and water systems." },
+                    { year: "1812", text: "Rediscovered by Swiss traveler Johann Ludwig Burckhardt." }
+                ]
+            },
+            {
+                id: 5,
+                name: "Pyramids of Giza",
+                location: "Giza Governorate",
+                country: "Egypt",
+                region: "Africa",
+                year: "2600 BC",
+                eraNum: -2600,
+                image: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=1000",
+                gallery: [
+                    "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=1000",
+                    "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?auto=format&fit=crop&q=80&w=1000"
+                ],
+                shortStory: "Ancient pyramid complexes including the Great Pyramid, erected for Pharaoh Khufu.",
+                fullStory: "The Great Pyramid of Giza is the oldest and largest of the pyramids in the Giza pyramid complex bordering present-day Giza in Greater Cairo, Egypt. It is the oldest of the Seven Wonders of the Ancient World, and the only one to remain largely intact.",
+                latitude: "29.9792° N",
+                longitude: "31.1342° E",
+                audioTitle: "Whispers of the Pharaohs",
+                audioUrl: "https://actions.google.com/sounds/v1/ambiences/desert_wind.ogg",
+                timeline: [
+                    { year: "2580 BC", text: "Construction begins under Pharaoh Khufu." },
+                    { year: "2560 BC", text: "Pyramid completed after 20 years of intense engineering." },
+                    { year: "820 AD", text: "Caliph Al-Ma'mun tunnels into the structure seeking treasure." },
+                    { year: "1979", text: "Inscribed as UNESCO World Heritage Site." }
+                ]
+            },
+            {
+                id: 6,
+                name: "Chichen Itza",
+                location: "Yucatán",
+                country: "Mexico",
+                region: "Americas",
+                year: "c. 600 AD",
+                eraNum: 600,
+                image: "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&q=80&w=1000",
+                gallery: [
+                    "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&q=80&w=1000"
+                ],
+                shortStory: "A massive Maya city built by the Terminal Classic period, dominated by the El Castillo step pyramid.",
+                fullStory: "Chichen Itza was a major focal point in the Northern Maya Lowlands from the Late Classic through the Terminal Classic and into the early portion of the Postclassic period. The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico.",
+                latitude: "20.6843° N",
+                longitude: "88.5678° W",
+                audioTitle: "Chants of the Feathered Serpent",
+                audioUrl: "https://actions.google.com/sounds/v1/ambiences/jungle_night.ogg",
+                timeline: [
+                    { year: "600 AD", text: "Early Mayan settlements take root around natural cenotes." },
+                    { year: "900 AD", text: "El Castillo pyramid (Temple of Kukulcán) reaches prominence." },
+                    { year: "1221", text: "Revolt and civil war leads to decline of Maya dominance." },
+                    { year: "2007", text: "Voted one of the New 7 Wonders of the World." }
+                ]
+            }
+        ];
+
+        let activeCategory = 'all';
+        let searchQuery = '';
+        let currentSort = 'popular';
+        let savedIds = JSON.parse(localStorage.getItem('heritage_bookmarks') || '[]');
+        let currentPlayingAudio = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMonumentsGrid();
+            renderTimeline();
+            updateSavedCount();
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                const heroImg = document.getElementById('hero-bg-img');
+                if (heroImg && scrolled < 1000) {
+                    heroImg.style.transform = `translateY(${scrolled * 0.3}px) scale(1.05)`;
+                }
+            });
+
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            });
+        });
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gold-500', 'text-heritage-950');
+                btn.classList.add('bg-heritage-900', 'text-heritage-300');
+            });
+            event.target.classList.add('bg-gold-500', 'text-heritage-950');
+            event.target.classList.remove('bg-heritage-900', 'text-heritage-300');
+            renderMonumentsGrid();
+        }
+
+        function executeSearch() {
+            searchQuery = document.getElementById('main-search-input').value.toLowerCase().trim();
+            renderMonumentsGrid();
+            document.getElementById('discover').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('main-search-input')?.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') executeSearch();
+        });
+
+        function applySorting() {
+            currentSort = document.getElementById('sort-select').value;
+            renderMonumentsGrid();
+        }
+
+        function renderMonumentsGrid() {
+            const grid = document.getElementById('monuments-grid');
+            let filtered = heritageData.filter(item => {
+                const matchesCat = (activeCategory === 'all') || (item.region === activeCategory);
+                const matchesSearch = !searchQuery || 
+                    item.name.toLowerCase().includes(searchQuery) ||
+                    item.country.toLowerCase().includes(searchQuery) ||
+                    item.location.toLowerCase().includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            if (currentSort === 'oldest') {
+                filtered.sort((a, b) => a.eraNum - b.eraNum);
+            } else if (currentSort === 'name') {
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center space-y-4">
+                        <i class="fa-solid fa-compass-drafting text-4xl text-heritage-600"></i>
+                        <p class="font-cinzel text-lg text-heritage-300">No heritage sites match your criteria.</p>
+                        <button onclick="resetFilters()" class="text-xs uppercase tracking-widest text-gold-400 hover:underline">Reset Filters</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => {
+                const isSaved = savedIds.includes(item.id);
+                return `
+                    <div class="group relative bg-heritage-900 border border-heritage-800 rounded-lg overflow-hidden shadow-xl hover:border-gold-500/50 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-heritage-900 via-transparent to-transparent"></div>
+                            
+                            <button onclick="toggleBookmark(event, ${item.id})" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-heritage-950/80 backdrop-blur-md border border-heritage-700/60 text-heritage-300 hover:text-gold-400 flex items-center justify-center transition-colors">
+                                <i class="${isSaved ? 'fa-solid text-gold-400' : 'fa-regular'} fa-bookmark"></i>
+                            </button>
+
+                            <span class="absolute bottom-3 left-3 px-2.5 py-1 bg-heritage-950/80 backdrop-blur-sm border border-gold-500/30 text-gold-400 text-[10px] uppercase tracking-wider font-semibold rounded">
+                                ${item.region}
+                            </span>
+                        </div>
+
+                        <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center space-x-2 text-xs text-heritage-400 mb-1">
+                                    <i class="fa-solid fa-location-dot text-gold-500"></i>
+                                    <span>${item.location}, ${item.country}</span>
+                                </div>
+                                <h3 class="font-cinzel text-xl font-bold text-heritage-50 group-hover:text-gold-400 transition-colors">${item.name}</h3>
+                                <p class="text-xs text-heritage-300 line-clamp-2 mt-2 leading-relaxed">${item.shortStory}</p>
+                            </div>
+
+                            <div class="pt-4 border-t border-heritage-800/80 flex items-center justify-between">
+                                <span class="text-[11px] font-mono text-gold-500/80">${item.year}</span>
+                                <button onclick="openDetailView(${item.id})" class="text-xs uppercase font-bold text-heritage-200 group-hover:text-gold-400 flex items-center space-x-1 transition-colors">
+                                    <span>Explore Site</span>
+                                    <i class="fa-solid fa-arrow-right text-[10px] transform group-hover:translate-x-1 transition-transform"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function resetFilters() {
+            activeCategory = 'all';
+            searchQuery = '';
+            document.getElementById('main-search-input').value = '';
+            renderMonumentsGrid();
+        }
+
+        function openDetailView(id) {
+            const item = heritageData.find(m => m.id === id);
+            if (!item) return;
+
+            const container = document.getElementById('modal-content-container');
+            const isSaved = savedIds.includes(item.id);
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                    <div class="lg:col-span-5 relative bg-heritage-950 p-6 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-heritage-800">
+                        <div class="space-y-4">
+                            <div class="relative h-72 rounded-lg overflow-hidden border border-heritage-800">
+                                <img id="active-modal-img" src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex space-x-2 overflow-x-auto pb-2">
+                                ${item.gallery.map(imgUrl => `
+                                    <button onclick="setModalImage('${imgUrl}')" class="flex-shrink-0 w-16 h-12 rounded border border-heritage-800 overflow-hidden hover:border-gold-400">
+                                        <img src="${imgUrl}" class="w-full h-full object-cover">
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 rounded-lg bg-heritage-900 border border-gold-500/30 space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-headphones text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-heritage-100 uppercase tracking-wider">Audio Heritage Tour</h4>
+                                    <p class="text-[10px] text-heritage-400">${item.audioTitle}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button id="audio-play-btn" onclick="toggleAudioGuide('${item.audioUrl}')" class="px-3 py-1.5 bg-gold-500 text-heritage-950 font-bold text-xs rounded hover:bg-gold-400 transition-colors flex items-center space-x-1">
+                                    <i class="fa-solid fa-play text-[10px]" id="audio-icon"></i>
+                                    <span id="audio-status-text">Listen Ambient Narration</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 p-6 sm:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs uppercase tracking-widest text-gold-500 font-semibold">${item.region} • ${item.year}</span>
+                                <button onclick="toggleBookmark(event, ${item.id})" class="text-xs text-heritage-300 hover:text-gold-400 flex items-center space-x-1">
+                                    <i class="${isSaved ? 'fa-solid text-gold-400' : 'fa-regular'} fa-bookmark"></i>
+                                    <span>${isSaved ? 'Saved' : 'Save Wonder'}</span>
+                                </button>
+                            </div>
+                            <h2 class="font-cinzel text-3xl font-extrabold text-heritage-50 mt-1">${item.name}</h2>
+                            <p class="text-xs text-heritage-400 flex items-center gap-1 mt-1">
+                                <i class="fa-solid fa-location-dot text-gold-500"></i> ${item.location}, ${item.country}
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-cinzel text-sm font-bold text-heritage-200 uppercase tracking-wider mb-2 border-b border-heritage-800 pb-1">Historical Narrative</h3>
+                            <p class="text-xs text-heritage-300 leading-relaxed font-playfair">${item.fullStory}</p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-cinzel text-sm font-bold text-heritage-200 uppercase tracking-wider mb-3 border-b border-heritage-800 pb-1">Chronological Milestones</h3>
+                            <div class="space-y-3">
+                                ${item.timeline.map(t => `
+                                    <div class="flex items-start space-x-3 text-xs">
+                                        <span class="font-mono text-gold-400 font-bold w-16 flex-shrink-0">${t.year}</span>
+                                        <span class="text-heritage-300">${t.text}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-heritage-950 rounded border border-heritage-800 flex items-center justify-between text-xs text-heritage-400 font-mono">
+                            <span>GPS: ${item.latitude}, ${item.longitude}</span>
+                            <a href="https://maps.google.com/?q=${encodeURIComponent(item.name + ' ' + item.country)}" target="_blank" class="text-gold-400 hover:underline flex items-center gap-1">
+                                <span>Open Maps</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function setModalImage(src) {
+            document.getElementById('active-modal-img').src = src;
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+            if (currentPlayingAudio) {
+                currentPlayingAudio.pause();
+                currentPlayingAudio = null;
+            }
+        }
+
+        function toggleAudioGuide(url) {
+            const btnText = document.getElementById('audio-status-text');
+            const icon = document.getElementById('audio-icon');
+
+            if (currentPlayingAudio && !currentPlayingAudio.paused) {
+                currentPlayingAudio.pause();
+                btnText.textContent = "Listen Ambient Narration";
+                icon.className = "fa-solid fa-play text-[10px]";
+            } else {
+                currentPlayingAudio = new Audio(url);
+                currentPlayingAudio.play();
+                btnText.textContent = "Pause Audio";
+                icon.className = "fa-solid fa-pause text-[10px]";
+
+                currentPlayingAudio.onended = () => {
+                    btnText.textContent = "Listen Ambient Narration";
+                    icon.className = "fa-solid fa-play text-[10px]";
+                };
+            }
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('timeline-events-container');
+            const sortedByEra = [...heritageData].sort((a,b) => a.eraNum - b.eraNum);
+
+            container.innerHTML = sortedByEra.map((item, idx) => {
+                const isEven = idx % 2 === 0;
+                return `
+                    <div class="mb-8 flex justify-between items-center w-full ${isEven ? 'md:flex-row-reverse' : ''}">
+                        <div class="order-1 md:w-5/12"></div>
+                        
+                        <div class="z-20 flex items-center order-1 bg-gold-500 shadow-xl w-8 h-8 rounded-full border-2 border-heritage-950 justify-center">
+                            <i class="fa-solid fa-landmark text-heritage-950 text-xs"></i>
+                        </div>
+                        
+                        <div class="order-1 bg-heritage-900 border border-heritage-800 rounded-lg shadow-xl md:w-5/12 px-6 py-4 hover:border-gold-500/40 transition-colors">
+                            <span class="font-mono text-xs text-gold-400 font-bold">${item.year}</span>
+                            <h3 class="font-cinzel text-lg font-bold text-heritage-50 mt-1">${item.name}</h3>
+                            <p class="text-xs text-heritage-400 mb-2">${item.location}, ${item.country}</p>
+                            <p class="text-xs text-heritage-300 leading-relaxed italic font-playfair">${item.shortStory}</p>
+                            <button onclick="openDetailView(${item.id})" class="mt-3 text-[11px] uppercase tracking-wider text-gold-400 hover:underline font-bold">
+                                View Era Details &rarr;
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleBookmark(e, id) {
+            e.stopPropagation();
+            if (savedIds.includes(id)) {
+                savedIds = savedIds.filter(i => i !== id);
+            } else {
+                savedIds.push(id);
+            }
+            localStorage.setItem('heritage_bookmarks', JSON.stringify(savedIds));
+            updateSavedCount();
+            renderMonumentsGrid();
+            renderFavoritesList();
+        }
+
+        function updateSavedCount() {
+            document.getElementById('saved-count').textContent = savedIds.length;
+            document.getElementById('mobile-saved-count').textContent = savedIds.length;
+        }
+
+        function openFavoritesModal() {
+            renderFavoritesList();
+            document.getElementById('favorites-modal').classList.remove('hidden');
+        }
+
+        function closeFavoritesModal() {
+            document.getElementById('favorites-modal').classList.add('hidden');
+        }
+
+        function renderFavoritesList() {
+            const list = document.getElementById('favorites-list');
+            if (savedIds.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-12 text-heritage-400 space-y-2">
+                        <i class="fa-regular fa-bookmark text-2xl"></i>
+                        <p class="text-xs">No saved heritage sites yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const savedItems = heritageData.filter(i => savedIds.includes(i.id));
+            list.innerHTML = savedItems.map(item => `
+                <div class="flex items-center justify-between p-3 bg-heritage-950 border border-heritage-800 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <img src="${item.image}" class="w-12 h-12 rounded object-cover">
+                        <div>
+                            <h4 class="font-cinzel text-sm font-bold text-heritage-100">${item.name}</h4>
+                            <p class="text-[10px] text-heritage-400">${item.country}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="openDetailView(${item.id}); closeFavoritesModal();" class="text-gold-400 hover:text-gold-300 text-xs p-1">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button onclick="toggleBookmark(event, ${item.id})" class="text-heritage-500 hover:text-red-400 text-xs p-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function scrollToExplore() {
+            document.getElementById('discover').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
